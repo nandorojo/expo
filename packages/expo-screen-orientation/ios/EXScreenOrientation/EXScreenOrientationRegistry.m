@@ -133,7 +133,7 @@ UM_REGISTER_SINGLETON_MODULE(ScreenOrientationRegistry)
   // checks if screen orientation should be changed when user rotates the device
   if ([EXScreenOrientationUtilities doesOrientationMask:currentOrientationMask containOrientation:newScreenOrientation]) {
     // emit event if screen orientation was changed, but traitCollectionsDidChange will not be triggered
-    if ([EXScreenOrientationUtilities doesDeviceSizeClassesAreEqual]
+    if ([EXScreenOrientationUtilities isIPad]
         || (UIInterfaceOrientationIsPortrait(newScreenOrientation) && UIInterfaceOrientationIsPortrait(_currentScreenOrientation))
         || (UIInterfaceOrientationIsLandscape(newScreenOrientation) && UIInterfaceOrientationIsLandscape(_currentScreenOrientation))) {
       [self screenOrientationDidChange:newScreenOrientation];
