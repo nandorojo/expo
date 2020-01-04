@@ -108,7 +108,18 @@ task prepareJSC(dependsOn: downloadJSC) {
   }
 }
 
-task buildNdkLib(dependsOn: prepareJSC) {
+task copyJSI() {
+  doLast {
+    copy {
+      from("../../../android/ReactCommon/jsi")
+
+      includeEmptyDirs(false)
+      into("$buildDir/jsi/jsi")
+    }
+  }
+}
+
+task buildNdkLib(dependsOn: [prepareJSC, copyJSI]) {
   inputs.dir('src/main/jni')
   inputs.dir('../cpp')
   outputs.dir("$buildDir/expo-gl-ndk/all")
@@ -121,6 +132,7 @@ task buildNdkLib(dependsOn: prepareJSC) {
           "NDK_OUT=$temporaryDir",
           "NDK_LIBS_OUT=$buildDir/expo-gl-ndk/all",
           "JSC_DIR=$buildDir/jsc",
+          "JSI_DIR=$buildDir/jsi",
           '-C', file('src/main/jni').absolutePath,
           '--jobs', Runtime.runtime.availableProcessors()
     }
@@ -132,6 +144,7 @@ task cleanNdkLib {
     exec {
       commandLine getNdkBuildFullPath(),
           "JSC_DIR=$buildDir/jsc",
+          "JSI_DIR=$buildDir/jsi",
           '-C', file('src/main/jni').absolutePath,
           'clean'
     }

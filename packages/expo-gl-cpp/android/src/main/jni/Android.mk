@@ -6,19 +6,22 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := expo-gl
 
 LOCAL_C_INCLUDES += ../../../../cpp/
+LOCAL_C_INCLUDES += ../../../build/jsi/jsi/
 LOCAL_SRC_FILES := \
   ../../../../cpp/UEXGL.cpp \
-  ../../../../cpp/EXJSUtils.c \
-  ../../../../cpp/EXJSConvertTypedArray.c \
+  ../../../../cpp/EXJSUtils.cpp \
   ../../../../cpp/EXGLContext.cpp \
   ../../../../cpp/EXGLInstallMethods.cpp \
   ../../../../cpp/EXGLInstallConstants.cpp \
   ../../../../cpp/EXGLNativeMethods.cpp \
+  ../../../../cpp/TypedArrayJSC.cpp \
+  ../../../../cpp/TypedArrayJSCHack.cpp \
+  ../../../../cpp/TypedArrayJSI.cpp \
   EXGL.cpp
 
 # weird hack that lets us mix C++ with -std=c++11 and C with -std=c99
-LOCAL_C99_FILES := $(filter %.c, $(LOCAL_SRC_FILES))
-TARGET-process-src-files-tags += $(call add-src-files-target-cflags, $(LOCAL_C99_FILES), -std=c99)
+#LOCAL_C99_FILES := $(filter %.c, $(LOCAL_SRC_FILES))
+#TARGET-process-src-files-tags += $(call add-src-files-target-cflags, $(LOCAL_C99_FILES), -std=c99)
 
 LOCAL_ALLOW_UNDEFINED_SYMBOLS := true
 LOCAL_SHARED_LIBRARIES := libjsc
