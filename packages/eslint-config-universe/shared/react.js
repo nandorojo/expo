@@ -37,6 +37,8 @@ module.exports = {
     'react/require-render-return': 'warn',
     'react/self-closing-comp': 'warn',
     'react/style-prop-object': 'warn',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
   },
   settings: {
     react: { version: 'detect' },
