@@ -1,10 +1,10 @@
 import React, { ComponentType, forwardRef } from 'react';
-import { Linking, Platform } from 'react-native';
+import { Linking, Platform, View } from 'react-native';
 
 import Text from '../primitives/Text';
 import { LinkProps } from './Text.types';
 
-export const A = forwardRef(({ href, target, ...props }: LinkProps, ref) => {
+export const A = forwardRef(({ href, target, isText = true, ...props }: LinkProps & { isText?: boolean }, ref) => {
   const nativeProps = Platform.select<LinkProps>({
     web: {
       href,
@@ -19,5 +19,6 @@ export const A = forwardRef(({ href, target, ...props }: LinkProps, ref) => {
       },
     },
   });
-  return <Text accessibilityRole="link" {...props} {...nativeProps} ref={ref} />;
-}) as ComponentType<LinkProps>;
+  const Component = isText ? Text : View;
+  return <Component accessibilityRole="link" {...props} {...nativeProps} ref={ref} />;
+}) as ComponentType<LinkProps & { isText?: boolean }>;
