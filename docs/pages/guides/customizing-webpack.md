@@ -66,7 +66,17 @@ To get everything working properly, you'll want to install and include a global 
 - Install the polyfill: `yarn add resize-observer-polyfill`
 - Restart the project and `@expo/webpack-config` will automatically include the polyfill.
 
-The reason it automatically includes the polyfill is because `react-native-web` needs it included immedietly. Webpack is able to inject the polyfill before any of the application code has been executed. Alternatively you can customize the webpack config and include the polyfill in the `entry` field yourself.
+The reason it automatically includes the polyfill is because `react-native-web` needs it included immediately. Webpack is able to inject the polyfill before any of the application code has been executed. Alternatively you can customize the webpack config and include the polyfill in the `entry` field yourself.
+
+To be safe, you can include the polyfill at the top of your `pages/_app.js` file before importing any other code:
+
+```js
+import ResizeObserver from 'resize-observer-polyfill'
+
+if (typeof window !== 'undefined' && window) {
+  window.ResizeObserver = ResizeObserver // set the observer globally before importing app
+}
+```
 
 ### Testing the ResizeObserver polyfill
 
